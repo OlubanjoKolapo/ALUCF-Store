@@ -1,0 +1,186 @@
+@import 'tailwindcss';
+
+/* ===========================================================
+   ALUCF — black, white, and the photographs.
+
+   The site chrome is monochrome so the garments carry all the
+   colour. Headlines are set in Anton: heavy, condensed, loud
+   enough to hold its own next to a full-bleed photo. Body copy
+   is Geist, sized for reading rather than for looking clever.
+   =========================================================== */
+@theme {
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+
+  /* greys, for secondary text and hairlines only */
+  --color-ash: #8a8a8a;
+  --color-smoke: #5c5c5c;
+  --color-fog: #c9c9c9;
+  --color-coal: #0d0d0d;
+  --color-slate: #161616;
+  --color-bone: #f3f1ee;
+
+  --font-display: 'Anton', 'Arial Narrow', 'Haettenschweiler', sans-serif;
+  --font-serif: 'Instrument Serif', 'Times New Roman', serif;
+  --font-sans:
+    'Geist', 'Inter Tight', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --gutter: 1.15rem;
+  }
+  @media (min-width: 768px) {
+    :root {
+      --gutter: 2.25rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    :root {
+      --gutter: 3.5rem;
+    }
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-weight: 400;
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  body[data-locked='true'] {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: #fff;
+    color: #000;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+}
+
+/* ---------- primitives ---------- */
+@utility shell {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 104rem;
+  padding-inline: var(--gutter);
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* The loud one. Anton is already condensed, so it needs almost no
+   negative tracking — too much and the counters close up. */
+@utility headline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: 0.002em;
+  text-transform: uppercase;
+}
+
+/* The quiet one — scripture, asides, anything that should feel spoken. */
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+@utility tight {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* ---------- photography ---------- */
+/* Every product shot sits in a square. Cropping is set per photo in
+   the data so a face or a print never lands under the crop line. */
+@utility shot-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: #111;
+}
+
+/* The studio print sits on cloth, so the folds have to show through it. */
+.print-dark {
+  mix-blend-mode: multiply;
+}
+
+.print-light {
+  mix-blend-mode: lighten;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Lenis ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
